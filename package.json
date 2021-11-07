@@ -1,6 +1,6 @@
 {
   "name": "use-response",
-  "version": "0.0.1-empty",
+  "version": "0.0.0-semantic-release",
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
@@ -9,7 +9,9 @@
     "index.d.ts"
   ],
   "scripts": {
-    "prepack": "npx -p typescript tsc --allowJs --checkJs --jsx react --module commonjs --declaration --noEmitOnError --outDir .stage index.js && mv .stage/* ."
+    "build": "npx -p typescript tsc --allowJs --checkJs --jsx react --module commonjs --declaration --noEmitOnError --outDir .stage index.js",
+    "prepack": "mv .stage/* .",
+    "postversion": "sed \"s/npm install --save use-response/npm install --save-exact use-response@$npm_package_version/\" -i readme.md"
   },
   "author": "balazs4",
   "license": "MIT",

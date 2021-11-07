@@ -7,7 +7,7 @@
 > :warning: early stage, execpt bugs :warning
 
 ```bash
-npm install -S use-response
+npm install --save use-response
 ```
 
 ## usage

@@ -1,3 +1,4 @@
 node_modules
 *.tgz
 .stage
+.d.ts
