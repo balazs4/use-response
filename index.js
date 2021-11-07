@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * useResponse react hook
+ * @params {String|Request} request 
+ * @params {undefined|Request} options 
+ * @params {Object[]} deps 
+ * @returns {Response}
+ */
 export default function useResponse(request, options, deps = []) {
   const [response, setResponse] = useState({
     status: null,
@@ -10,10 +17,10 @@ export default function useResponse(request, options, deps = []) {
   useEffect(() => {
     fetch(request, options)
       .then((res) => {
-        console.log(res.headers)
-        return /application\/json/.test(res?.headers?.get('content-type')) === true
-          ? res.json().then((json) => ({ url: res.url, status: res.status, body: json }))
-          : res.text().then((text) => ({ url: res.url,status: res.status, body: text }));
+        return /application\/json/.test(res?.headers?.get('content-type')) ===
+          true
+          ? res.json().then((json) => ({ status: res.status, body: json }))
+          : res.text().then((text) => ({ status: res.status, body: text }));
       })
       .then((res) => {
         setResponse({ status: res.status, body: res.body, error: null });
@@ -25,3 +32,11 @@ export default function useResponse(request, options, deps = []) {
 
   return response;
 }
+
+/**
+ * Return type of useResponse function
+ * @typedef {Object} Response
+ * @property {'pending'|'failed'|Number|null} status
+ * @property {Object|String|null} content
+ * @property {String|null} error
+ */

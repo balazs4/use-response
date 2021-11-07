@@ -1,11 +1,21 @@
 {
   "name": "use-response",
   "version": "0.0.1-empty",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepack": "npx -p typescript tsc --allowJs --checkJs --jsx react --module commonjs --declaration --noEmitOnError --outDir .stage index.js && mv .stage/* ."
   },
   "author": "balazs4",
   "license": "MIT",
+  "peerDependencies": {
+    "react": "^16"
+  },
   "prettier": {
     "singleQuote": true
   }
