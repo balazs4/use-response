@@ -9,7 +9,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "npx -p typescript tsc --allowJs --checkJs --jsx react --module commonjs --declaration --noEmitOnError --outDir .stage index.js",
+    "build": "npx tsc --allowJs --checkJs --jsx react --module commonjs --declaration --noEmitOnError --outDir .stage index.js",
     "prepack": "mv .stage/* .",
     "postversion": "sed \"s/npm install --save use-response/npm install --save-exact use-response@$npm_package_version/\" -i readme.md"
   },
@@ -20,5 +20,9 @@
   },
   "prettier": {
     "singleQuote": true
+  },
+  "devDependencies": {
+    "react": "17.0.2",
+    "typescript": "4.4.4"
   }
 }

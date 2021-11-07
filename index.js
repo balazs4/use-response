@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 /**
  * useResponse react hook
- * @params {String|Request} request 
- * @params {undefined|Request} options 
- * @params {Object[]} deps 
+ * @params {String|Request} request
+ * @params {undefined|Request} options
+ * @params {Object[]} deps
  * @returns {Response}
  */
 export default function useResponse(request, options, deps = []) {
@@ -15,6 +15,7 @@ export default function useResponse(request, options, deps = []) {
   });
 
   useEffect(() => {
+    let shouldSetResponse = true;
     fetch(request, options)
       .then((res) => {
         return /application\/json/.test(res?.headers?.get('content-type')) ===
@@ -23,11 +24,16 @@ export default function useResponse(request, options, deps = []) {
           : res.text().then((text) => ({ status: res.status, body: text }));
       })
       .then((res) => {
-        setResponse({ status: res.status, body: res.body, error: null });
+        if (shouldSetResponse === true)
+          setResponse({ status: res.status, body: res.body, error: null });
       })
       .catch((error) => {
-        setResponse({ status: 'failed', body: null, error: error.message });
+        if (shouldSetResponse === true)
+          setResponse({ status: 'failed', body: null, error: error.message });
       });
+    return () => {
+      shouldSetResponse = false;
+    };
   }, deps);
 
   return response;
