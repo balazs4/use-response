@@ -1,0 +1,9 @@
+{
+  "name": "use-response",
+  "version": "0.0.1-empty",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "balazs4",
+  "license": "MIT"
+}
