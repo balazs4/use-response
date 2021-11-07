@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useResponse(request, options) {
+export default function useResponse(request, options, deps = []) {
   const [response, setResponse] = useState({
     status: null,
     content: null,
@@ -10,9 +10,10 @@ export default function useResponse(request, options) {
   useEffect(() => {
     fetch(request, options)
       .then((res) => {
-        return res?.headers?.['content-type'] === 'application/json'
-          ? res.json().then((json) => ({ status: res.status, body: json }))
-          : res.text().then((text) => ({ status: res.status, body: text }));
+        console.log(res.headers)
+        return /application\/json/.test(res?.headers?.get('content-type')) === true
+          ? res.json().then((json) => ({ url: res.url, status: res.status, body: json }))
+          : res.text().then((text) => ({ url: res.url,status: res.status, body: text }));
       })
       .then((res) => {
         setResponse({ status: res.status, body: res.body, error: null });
@@ -20,7 +21,7 @@ export default function useResponse(request, options) {
       .catch((error) => {
         setResponse({ status: 'failed', body: null, error: error.message });
       });
-  }, [request, options]);
+  }, deps);
 
-  return [response];
+  return response;
 }
